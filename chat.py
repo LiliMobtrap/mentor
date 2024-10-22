@@ -3,7 +3,6 @@ import json
 from openai import OpenAI
 from setup import embed_text
 
-# Defina a chave da API do OpenAI
 os.environ['OPENAI_API_KEY'] = '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'
 client = OpenAI()
 
@@ -32,7 +31,7 @@ def save_interactions(index_name, role, content):
     history_file = get_history_file(index_name)
     with open(history_file, 'a') as f:
         json.dump({"role": role, "content": content}, f)
-        f.write('\n')  # JSONL usa uma linha por registro
+        f.write('\n') 
 
 
 def reset_history(index_name):
@@ -42,18 +41,15 @@ def reset_history(index_name):
 
 
 def chat(prompt, index, index_name, gf_name):
-    _historico = load_history(index_name)  # Carrega o histórico do arquivo
+    _historico = load_history(index_name) 
 
-    # Adiciona a nova interação do usuário ao histórico e salva no arquivo
     _historico.append({"role": "user", "content": prompt})
     save_interactions(index_name, "user", prompt)
 
-    # Resuma o histórico completo até o momento, incluindo o prompt atual
-    last_interactions = _historico[-10:]  # Pega até as últimas 10 interações
+    last_interactions = _historico[-10:]  
     chat_history = "\n".join([f"{entry['role']}: {entry['content']}" for entry in last_interactions])
     query = summarize_chat(chat_history)
 
-    # Faz a query no índice usando o resumo para obter o contexto relevante
     query_response = index.query(
         vector=embed_text(query),
         top_k=3,
@@ -61,7 +57,6 @@ def chat(prompt, index, index_name, gf_name):
     )
     context = "\n".join([match['metadata']['text'] for match in query_response['matches']])
 
-    # Adiciona o contexto recuperado ao histórico como uma interação do sistema
     _historico.append({"role": "system", "content": f"Contexto recuperado:\n{context}"})
     # save_interactions(index_name, "system", f"Contexto recuperado:\n{context}")
 
@@ -70,7 +65,7 @@ def chat(prompt, index, index_name, gf_name):
         model="gpt-4o-mini",
         messages=[
             {"role": "system", "content": f"You are {gf_name} and your task is to answer user's questions using the expressions, the style and the informations of the given context. Don't make up anything, just answer the user's message. Focus on the context and attempt to reflect the author's real opinion as it's your own. Avoid being verbose and use only the informations that answer the user's message. You can just discard useless information."}
-        ] + _historico,  # Concatena o histórico completo com o prompt
+        ] + _historico, 
         temperature=0.7,
         max_tokens=2048,
         top_p=1,
