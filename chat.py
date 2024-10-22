@@ -3,7 +3,7 @@ import json
 from openai import OpenAI
 from setup import embed_text
 
-os.environ['OPENAI_API_KEY'] = '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'
+os.environ['OPENAI_API_KEY'] = 'insert_key'
 client = OpenAI()
 
 # Caminho para a pasta onde os arquivos de histórico serão armazenados
