@@ -6,7 +6,7 @@ from pinecone.grpc import PineconeGRPC as Pinecone
 from pinecone import ServerlessSpec
 from doc_to_string import string
 
-pinecone_api_key = "89333e65-16ca-4198-b9a1-f01b5065c042"
+pinecone_api_key = "insert_key"
 os.environ['OPENAI_API_KEY'] = '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'
 client = OpenAI()
 
