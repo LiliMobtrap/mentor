@@ -2,7 +2,7 @@ from chat import chat
 from pinecone.grpc import PineconeGRPC as Pinecone
 from setup import setup
 
-pc = Pinecone(api_key="89333e65-16ca-4198-b9a1-f01b5065c042")
+pc = Pinecone(api_key="insert_key")
 
 gf_name = "Bronze Age Pervert"
 
