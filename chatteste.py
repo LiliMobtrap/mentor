@@ -8,12 +8,9 @@ gf_name = "Bronze Age Pervert"
 
 index, index_name = setup(gf_name)
 print(index_name)
-# Definição das outras variáveis
 prompt = "How can I become Peter Thiel's twink?"
 # index_name = "bronzeagepervertmybeloved"
 # index = pc.Index(index_name)
-# Executa a função chat
 response = chat(prompt=prompt, index=index, index_name=index_name, gf_name=gf_name)
 
-# Imprime a resposta
 print(response)
